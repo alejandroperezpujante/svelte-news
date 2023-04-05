@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["filteredRelationCount"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id           String @id
+  email        String @unique
+  username     String @unique
+  passwordHash String @map("password_hash")
+
+  sessions Session[]
+  posts    Post[]
+  votes    Vote[]
+  comments Comment[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("accounts")
+}
+
+model Session {
+  id        String  @id
+  accountId String  @map("account_id")
+  account   Account @relation(fields: [accountId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  expiresAt DateTime @map("expires_at")
+
+  @@map("sessions")
+}
+
+model Post {
+  id        String  @id
+  accountId String  @map("account_id")
+  account   Account @relation(fields: [accountId], references: [id])
+
+  title       String
+  category    String
+  link        String?
+  description String?
+
+  upvotes  Vote[]
+  comments Comment[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("posts")
+}
+
+model Vote {
+  id        String  @id
+  accountId String  @map("account_id")
+  account   Account @relation(fields: [accountId], references: [id])
+  postId    String  @map("post_id")
+  post      Post    @relation(fields: [postId], references: [id])
+
+  @@map("votes")
+}
+
+model Comment {
+  id        String  @id
+  accountId String  @map("account_id")
+  account   Account @relation(fields: [accountId], references: [id])
+  postId    String  @map("post_id")
+  post      Post    @relation(fields: [postId], references: [id])
+
+  content String
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("comments")
+}

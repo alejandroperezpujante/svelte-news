@@ -1,0 +1,53 @@
+body {
+	@apply container;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.input {
+	width: 100%;
+	display: block;
+	padding: 0.5rem;
+	border: 1px solid #ccc;
+	border-radius: 0.3rem;
+}
+.input:disabled {
+	opacity: 0.5;
+}
+
+.label-text {
+	margin-bottom: 0.5rem;
+	font-size: 0.8rem;
+	font-weight: 600;
+	color: #333;
+}
+
+.link {
+	color: #007bff;
+	text-decoration: none;
+}
+.link:hover {
+	text-decoration: underline;
+}
+.link:active {
+	color: #0056b3;
+}
+
+.btn {
+	padding: 0.5rem 1rem;
+	border-radius: 0.3rem;
+}
+
+.btn:disabled {
+	opacity: 0.5;
+}
+
+.btn-sm {
+	padding: 0.3rem 0.5rem;
+	font-size: 0.8rem;
+}
+
+.btn-primary {
+	background-color: #007bff;
+	color: #fff;
+}

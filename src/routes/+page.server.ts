@@ -9,6 +9,7 @@ export async function load() {
 		columns: {
 			id: true,
 			title: true,
+			userId: true,
 			createdAt: true
 		},
 		orderBy: [desc(postTable.createdAt)],

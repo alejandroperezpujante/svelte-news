@@ -1,5 +1,7 @@
 <script>
 	import * as Card from '$lib/components/ui/card';
+	import FormattedDate from '$lib/components/FormattedDate.svelte';
+	import { Button } from '$lib/components/ui/button';
 
 	export let data;
 </script>
@@ -10,16 +12,30 @@
 		<p class="text-sm text-muted-foreground">Here are the most recent posts from the community.</p>
 	</hgroup>
 
-	<Card.Root>
-		<Card.Content>
-			<ul>
-				{#each data.recentPosts as post}
-					<li>
-						<h2>{post.title}</h2>
+	<ul class="space-y-4">
+		{#each data.recentPosts as post}
+			<li>
+				<Card.Root>
+					<Card.Header>
+						<Card.Title tag="h4">{post.title}</Card.Title>
+						<Card.Description>
+							<FormattedDate date={post.createdAt} />
+						</Card.Description>
+					</Card.Header>
+
+					<Card.Content>
 						<p>{post.clampedBody}</p>
-					</li>
-				{/each}
-			</ul>
-		</Card.Content>
-	</Card.Root>
+					</Card.Content>
+
+					<Card.Footer class="gap-4">
+						<Button href={`posts/${post.id}`}>Read More</Button>
+						{#if data.user?.id === post.userId}
+							<Button href={`posts/${post.id}/edit`}>Edit</Button>
+							<Button href={`posts/${post.id}/delete`} variant="destructive">Delete</Button>
+						{/if}
+					</Card.Footer>
+				</Card.Root>
+			</li>
+		{/each}
+	</ul>
 </main>

@@ -24,8 +24,8 @@ This is a simple news app built with SvelteKit. It aims to replicate the functio
 - [x] Submit a new post
 - [x] View recent posts
 - [x] Dark mode
-- [] Upvote posts
-- [] Comment on posts
-- [] View user profiles
-- [] Search posts
-- [] Pagination
+- [ ] Upvote posts
+- [ ] Comment on posts
+- [ ] View user profiles
+- [ ] Search posts
+- [ ] Pagination

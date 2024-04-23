@@ -36,7 +36,7 @@ export async function GET(event) {
 			where: eq(userTable.githubId, githubUser.id)
 		});
 
-		if (existingUser === undefined) {
+		if (!existingUser) {
 			const userId = generateId(15);
 
 			// TODO: Handle possible error

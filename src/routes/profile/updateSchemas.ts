@@ -1,14 +1,10 @@
+import { emailSchema, passwordSchema, usernameSchema } from '$lib/validationSchemas';
 import { z } from 'zod';
 
 export const updateEmailSchema = z.object({
-	email: z.string().min(1, 'Email is required').email('Email must be a valid email address')
+	email: emailSchema
 });
 
-const passwordSchema = z
-	.string()
-	.min(1, 'Password is required')
-	.min(8, 'Password must be at least 8 characters')
-	.max(48, 'Password must be at most 48 characters');
 export const updatePasswordSchema = z
 	.object({
 		currentPassword: passwordSchema,
@@ -25,5 +21,5 @@ export const updatePasswordSchema = z
 	});
 
 export const updateUsernameSchema = z.object({
-	username: z.string().min(1, 'Username is required').max(35, 'Username must be at 35 characters')
+	username: usernameSchema
 });

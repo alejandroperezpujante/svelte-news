@@ -18,7 +18,7 @@ export async function handle({ event, resolve }) {
 			...sessionCookie.attributes
 		});
 	}
-	if (session === null) {
+	if (!session) {
 		const sessionCookie = auth.createBlankSessionCookie();
 		event.cookies.set(sessionCookie.name, sessionCookie.value, {
 			path: '.',

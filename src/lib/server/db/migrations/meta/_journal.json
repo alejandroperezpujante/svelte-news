@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1713818660584,
+      "tag": "0000_normal_skreet",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1713819572484,
+      "tag": "0001_green_eternals",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1713821711390,
+      "tag": "0002_previous_menace",
+      "breakpoints": true
+    }
+  ]
+}

@@ -1,9 +1,21 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button/index.js';
-	import * as Card from '$lib/components/ui/card/index.js';
-	import { Input } from '$lib/components/ui/input/index.js';
-	import { Label } from '$lib/components/ui/label/index.js';
+	import * as Card from '$lib/components/ui/card';
+	import * as Form from '$lib/components/ui/form';
+	import { Button } from '$lib/components/ui/button';
+	import { Input } from '$lib/components/ui/input';
+	import { Label } from '$lib/components/ui/label';
 	import { Github } from 'lucide-svelte';
+
+	import { superForm } from 'sveltekit-superforms';
+	import { zodClient } from 'sveltekit-superforms/adapters';
+	import { registerSchema } from './registerSchema.js';
+
+	export let data;
+
+	const form = superForm(data.form, {
+		validators: zodClient(registerSchema)
+	});
+	const { form: formData, enhance } = form;
 </script>
 
 <main class="flex-1 content-center">
@@ -13,31 +25,49 @@
 			<Card.Description>Enter your information to create an account</Card.Description>
 		</Card.Header>
 		<Card.Content>
-			<div class="grid gap-4">
+			<form method="post" class="grid gap-4" use:enhance>
 				<div class="grid grid-cols-2 gap-4">
-					<div class="grid gap-2">
-						<Label for="first-name">First name</Label>
-						<Input id="first-name" placeholder="Max" required />
-					</div>
-					<div class="grid gap-2">
-						<Label for="last-name">Last name</Label>
-						<Input id="last-name" placeholder="Robinson" required />
-					</div>
+					<Form.Field {form} name="username">
+						<Form.Control let:attrs>
+							<Form.Label>Username</Form.Label>
+							<Input {...attrs} bind:value={$formData.username} autocomplete="username" />
+						</Form.Control>
+					</Form.Field>
+					<Form.Field {form} name="email">
+						<Form.Control let:attrs>
+							<Form.Label>Email</Form.Label>
+							<Input type="email" {...attrs} bind:value={$formData.email} />
+						</Form.Control>
+					</Form.Field>
 				</div>
-				<div class="grid gap-2">
-					<Label for="email">Email</Label>
-					<Input id="email" type="email" placeholder="m@example.com" required />
-				</div>
-				<div class="grid gap-2">
-					<Label for="password">Password</Label>
-					<Input id="password" type="password" />
-				</div>
+				<Form.Field {form} name="password">
+					<Form.Control let:attrs>
+						<Form.Label>Password</Form.Label>
+						<Input
+							type="password"
+							{...attrs}
+							bind:value={$formData.password}
+							autocomplete="new-password"
+						/>
+					</Form.Control>
+				</Form.Field>
+				<Form.Field {form} name="confirmPassword">
+					<Form.Control let:attrs>
+						<Form.Label>Confirm Password</Form.Label>
+						<Input
+							type="password"
+							{...attrs}
+							bind:value={$formData.confirmPassword}
+							autocomplete="new-password"
+						/>
+					</Form.Control>
+				</Form.Field>
 				<Button type="submit" class="w-full">Create an account</Button>
 				<Button href="/login/github" variant="outline" class="w-full gap-2">
 					<span>Register with GitHub</span>
 					<Github />
 				</Button>
-			</div>
+			</form>
 			<div class="mt-4 text-center text-sm">
 				Already have an account?
 				<a href="/login" class="underline">Log In</a>
